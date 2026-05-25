@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letter</title>
+    <link rel="stylesheet" href="css/flower.css" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at top, #ffe5f5 0%, #ffc6e8 38%, #9f6ab7 100%);
+        color: #2d1437;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: visible;
+      }
+      #letter-app {
+        width: min(100%, 740px);
+        text-align: center;
+        position: relative;
+        padding: 24px;
+      }
+      .envelope {
+        width: 360px;
+        height: 240px;
+        margin: 0 auto 24px;
+        position: relative;
+        border-radius: 28px;
+        background: linear-gradient(180deg, #ffffff 0%, #ffe6f0 100%);
+        box-shadow: 0 25px 70px rgba(63, 22, 54, 0.24);
+        cursor: pointer;
+        overflow: visible;
+        transition: transform 0.35s ease, height 0.35s ease;
+        z-index: 1;
+      }
+      .envelope.open {
+        height: 320px;
+      }
+      .envelope:hover {
+        transform: translateY(-4px);
+      }
+      .envelope::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 230, 245, 0.7));
+        z-index: 2;
+      }
+      .envelope::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #ffe6f2 0%, #ffd3e7 100%);
+        clip-path: polygon(0 0, 100% 0, 50% 70%, 0 0);
+        transition: transform 0.4s ease;
+        transform-origin: top;
+        z-index: 2;
+      }
+      .envelope.open::after {
+        transform: translateY(-105%);
+      }
+      .letter {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        width: 88%;
+        height: 390%;
+        transform: translate(-50%, 18%) scale(0.94);
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+        padding: 22px 24px;
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+        text-align: left;
+        z-index: 3;
+      }
+      .envelope.open .letter {
+        opacity: 1;
+        transform: translate(-50%, -12%) scale(1);
+        pointer-events: auto;
+      }
+      .letter h1 {
+        margin: 0 0 10px;
+        font-size: 2rem;
+        color: #b01d6f;
+      }
+      .letter p {
+        margin: 0 0 15px;
+        color: #4a2b44;
+        line-height: 1.7;
+        font-size: 1rem;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+      }
+      .envelope.open .letter p {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .surprise {
+        display: inline-block;
+        font-size: 2rem;
+        font-weight: 900;
+        color: #d31f70;
+        line-height: 1.2;
+        letter-spacing: 0.04em;
+        margin-top: 18px;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+      .envelope.open .surprise {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .action-button {
+        border: none;
+        background: #ff5ea9;
+        color: #ffffff;
+        font-size: 1rem;
+        padding: 14px 28px;
+        border-radius: 999px;
+        cursor: pointer;
+        box-shadow: 0 16px 28px rgba(255, 94, 169, 0.26);
+        transition: transform 0.22s ease, background 0.22s ease;
+      }
+      .action-button:hover {
+        transform: translateY(-2px);
+        background: #ff2d8d;
+      }
+      .hearts {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .heart {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: #ff3d90;
+        transform: rotate(45deg);
+        opacity: 0;
+      }
+      .heart::before,
+      .heart::after {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: #ff3d90;
+        border-radius: 50%;
+      }
+      .heart::before {
+        top: -8px;
+        left: 0;
+      }
+      .heart::after {
+        top: 0;
+        left: 8px;
+      }
+      .typewriter {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        border-right: 0.1em solid rgba(0, 0, 0, 0.4);
+        animation: blink 0.8s step-end infinite;
+      }
+      @keyframes floatUp {
+        0% {
+          opacity: 0;
+          transform: translate3d(0, 0, 0) scale(0.8) rotate(45deg);
+        }
+        20% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translate3d(var(--dx), -210px, 0) scale(0.45) rotate(45deg);
+        }
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          border-color: rgba(0, 0, 0, 0.4);
+        }
+        50% {
+          border-color: transparent;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="letter-app">
+      <div class="envelope" id="envelope" aria-label="Open the surprise letter">
+        <div class="letter" id="letter">
+          <h1>Para sa aking pinakamamahal</h1>
+          <p class="letter-line">Bawat umaga na kasama kita, para bang muling nabubuo ang mundo ko.</p>
+          <p class="letter-line">Ang ngiti mo ang naging liwanag ko sa bawat araw na madilim, at ang iyong tawa ang musika sa puso ko.</p>
+          <p class="letter-line">Sa bawat simpleng usapan at tahimik na sandali, nararamdaman ko kung gaano ako pinagpala na ikaw ang nasa tabi ko.</p>
+          <p class="letter-line">Mahal ko ang paraan kung paano mo nakita ang maganda kahit sa mga maliliit na bagay, at kung paano mo pinaparamdam sa akin na may tahanan ako sa iyong mga yakap.</p>
+          <p class="letter-line">Hindi lang kita mahal dahil ikaw ay mabait, maalalahanin, at matalino—minamahal kita dahil sa dami ng pag-asa na pinapalakas mo sa puso ko.</p>
+          <p class="letter-line">Kapag nararamdaman kong pagod na ako, ikaw ang nagbibigay lakas. Kapag natutuwa ako, ikaw ang unang naiisip ko.</p>
+          <p class="letter-line">Hindi ko maipaliwanag ang kagandahan ng mundo kapag kasama ka, pero alam kong bawat sandali ay mas naging totoo at mas naging makulay dahil sa iyo.</p>
+          <p class="letter-line">Salamat sa pag-intindi sa akin, salamat sa pag-aalaga sa puso ko, at salamat sa pagiging ikaw—ang pinakaimportanteng tao sa buhay ko.</p>
+          <p class="letter-line">Kung sa aking mga mata, ikaw ang aking pangarap, sana sa iyong puso ay ikaw rin ang aking tahanan.</p>
+          <p class="surprise" id="surpriseText"></p>
+        </div>
+      </div>
+      <button class="action-button" id="openButton">Buksan ang sulat</button>
+      <button class="action-button" id="continueButton" style="margin-top: 12px; background: #9a1f86;">
+        Continue lg po ulit...
+      </button>
+      <div class="hearts" id="hearts"></div>
+    </div>
+    <script>
+      const envelope = document.getElementById('envelope');
+      const openButton = document.getElementById('openButton');
+      const continueButton = document.getElementById('continueButton');
+      const surpriseText = document.getElementById('surpriseText');
+      const hearts = document.getElementById('hearts');
+      let opened = false;
+      const message = 'MAHAL NA MAHAL KITA BABI 💖';
+
+      function createHeart(x) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = x + 'px';
+        heart.style.setProperty('--dx', (Math.random() * 140 - 70) + 'px');
+        heart.style.animation = `floatUp ${2.2 + Math.random() * 0.8}s ease forwards`;
+        hearts.appendChild(heart);
+        setTimeout(() => heart.remove(), 2600);
+      }
+
+      function showSurprise() {
+        surpriseText.classList.add('typewriter');
+        surpriseText.textContent = '';
+        let index = 0;
+        const timer = setInterval(() => {
+          surpriseText.textContent += message[index];
+          index += 1;
+          if (index === message.length) {
+            clearInterval(timer);
+            surpriseText.classList.remove('typewriter');
+            openButton.textContent = 'Buksan muli';
+          }
+        }, 110);
+        for (let i = 0; i < 18; i += 1) {
+          setTimeout(() => createHeart(60 + Math.random() * 220), i * 100);
+        }
+      }
+
+      function toggleLetter() {
+        opened = !opened;
+        envelope.classList.toggle('open', opened);
+        if (opened) {
+          showSurprise();
+          openButton.textContent = 'Buksan muli';
+        } else {
+          surpriseText.textContent = '';
+          surpriseText.classList.remove('typewriter');
+          openButton.textContent = 'Buksan ang sulat';
+        }
+      }
+
+      envelope.addEventListener('click', toggleLetter);
+      openButton.addEventListener('click', toggleLetter);
+      continueButton.addEventListener('click', () => {
+        location.href = 'lastpage.html';
+      });
+    </script>
+  </body>
+</html>

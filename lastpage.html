@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iloveyou Babi!</title>
+    <link rel="stylesheet" href="css/flower.css" />
+    <style>
+      body {
+        overflow: visible;
+      }
+      .receipt {
+        max-width: 620px;
+        margin: 24px auto 40px;
+        padding: 18px 22px;
+        border: 2px solid rgba(255, 255, 255, 0.45);
+        border-radius: 16px;
+        background: #0054a926;
+        color: #000000;
+        font-family: sans-serif;
+        line-height: 1.6;
+      }
+      .receipt h2 {
+        margin: 0 0 14px;
+        font-size: 1.4rem;
+      }
+      .receipt .receipt-item {
+        margin-bottom: 10px;
+      }
+      .receipt .receipt-item strong {
+        display: inline-block;
+        min-width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="thankyou"><b>Thank you for being my girlfriend babi, I Love You So Much!!</b></div>
+    <div class="flower">
+      <div class="f-wrapper">
+        <div class="flower__line"></div>
+        <div class="f">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__leaf flower__leaf--5"></div>
+          <div class="flower__leaf flower__leaf--6"></div>
+          <div class="flower__leaf flower__leaf--7"></div>
+          <div
+            class="flower__leaf flower__leaf--8 flower__fall-down--yellow"
+          ></div>
+        </div>
+      </div>
+
+      <div class="f-wrapper f-wrapper--2">
+        <div class="flower__line"></div>
+        <div class="f">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__leaf flower__leaf--5"></div>
+          <div class="flower__leaf flower__leaf--6"></div>
+          <div class="flower__leaf flower__leaf--7"></div>
+          <div
+            class="flower__leaf flower__leaf--8 flower__fall-down--pink"
+          ></div>
+        </div>
+      </div>
+
+      <div class="f-wrapper f-wrapper--3">
+        <div class="flower__line"></div>
+        <div class="f">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__leaf flower__leaf--5"></div>
+          <div class="flower__leaf flower__leaf--6"></div>
+          <div class="flower__leaf flower__leaf--7"></div>
+          <div
+            class="flower__leaf flower__leaf--8 flower__fall-down--purple"
+          ></div>
+        </div>
+      </div>
+      <div class="flower__glass"></div>
+    </div>
+    <div id="receipt" class="receipt">
+      <h2>Receipt</h2>
+      <div class="receipt-item"><strong>Date:</strong> <span id="receipt-date">Loading...</span></div>
+      <div class="receipt-item"><strong>Place:</strong> <span id="receipt-place">Loading...</span></div>
+      <div class="receipt-item"><strong>Activities:</strong> <span id="receipt-activity">Loading...</span></div>
+      <div class="receipt-item"><strong>Food:</strong> <span id="receipt-food">Loading...</span></div>
+      <div class="receipt-item"><strong>Dessert:</strong> <span id="receipt-dessert">Loading...</span></div>
+    </div>
+    <script>
+      function getStoredValues(key) {
+        const raw = localStorage.getItem(key);
+        if (!raw) {
+          return [];
+        }
+        try {
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [parsed];
+        } catch (error) {
+          return [raw];
+        }
+      }
+
+      function formatStored(key, emptyText) {
+        const values = getStoredValues(key);
+        return values.length ? values.join(', ') : emptyText;
+      }
+
+      function renderReceipt() {
+        document.getElementById('receipt-date').textContent =
+          localStorage.getItem('monthsarryDate') || 'None selected';
+        document.getElementById('receipt-place').textContent = formatStored('monthsarryPlace', 'None selected');
+        document.getElementById('receipt-activity').textContent = formatStored('monthsarryActivity', 'None selected');
+        document.getElementById('receipt-food').textContent = formatStored('monthsarryFood', 'None selected');
+        document.getElementById('receipt-dessert').textContent = formatStored('monthsarryDessert', 'None selected');
+      }
+
+      document.addEventListener('DOMContentLoaded', renderReceipt);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Places</title>
+    <link rel="stylesheet" href="css/activities.css" />
+  </head>
+  <body>
+    <div id="activityquestion"><b>What place are we going?</b></div>
+    <div class="activities-selection">
+      <div class="activity-item">
+        <img src="places/lucena.jpg" alt="lucena" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="lucena"
+          />Lucena</label
+        >
+      </div>
+      <div class="activity-item">
+        <img src="places/atimonan.jpg" alt="atimonan" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="atimonan"
+          />Atimonan</label
+        >
+      </div>
+      <div class="activity-item">
+        <img src="places/other.jpg" alt="other" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="other"
+          />Other</label
+        >
+      </div>
+    </div>
+    <button class="button" onclick="savePlaces()">
+      Next page po... 
+    </button>
+    <script>
+      function savePlaces() {
+        const values = Array.from(document.querySelectorAll('input[name="activities"]:checked')).map((input) => input.value);
+        localStorage.setItem('monthsarryPlace', JSON.stringify(values));
+        location.href = 'activities.html';
+      }
+    </script>
+  </body>
+</html>

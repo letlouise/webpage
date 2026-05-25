@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activities</title>
+    <link rel="stylesheet" href="css/activities.css" />
+  </head>
+  <body>
+    <div id="activityquestion"><b>Where are we going?</b></div>
+    <div class="activities-selection">
+      <div class="activity-item">
+        <img src="activities/mall.jpg" alt="mall" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="mall"
+          />Mall</label
+        >
+      </div>
+      <div class="activity-item">
+        <img src="activities/park.jpg" alt="park" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="park"
+          />Park</label
+        >
+      </div>
+      <div class="activity-item">
+        <img src="activities/restau.jpeg" alt="restaurant" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="restaurant"
+          />Restaurant</label
+        >
+      </div>
+      <div class="activity-item">
+        <img src="activities/cinema.jpg" alt="cinema" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="cinema"
+          />Movie Marathon</label
+        >
+      </div>
+    </div>
+    <button class="button" onclick="saveActivities()">
+      Next page po... 
+    </button>
+    <script>
+      function saveActivities() {
+        const values = Array.from(document.querySelectorAll('input[name="activities"]:checked')).map((input) => input.value);
+        localStorage.setItem('monthsarryActivity', JSON.stringify(values));
+        location.href = 'food.html';
+      }
+    </script>
+  </body>
+</html>
